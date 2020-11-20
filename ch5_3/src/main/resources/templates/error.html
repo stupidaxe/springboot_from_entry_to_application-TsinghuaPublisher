@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>error</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<!-- 默认访问 src/main/resources/static下的css文件夹-->
+<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}" />
+</head>
+<body>
+  <div class="panel-l container clearfix">
+        <div class="error">
+            <p class="title"><span class="code" th:text="${status}"></span>非常抱歉，没有找到您要查看的页面</p>
+            <div class="common-hint-word">
+                <div th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss')}"></div>
+                <div th:text="${message}"></div>
+                <div th:text="${error}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

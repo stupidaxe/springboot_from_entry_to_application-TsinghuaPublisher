@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>index</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<!-- 默认访问 src/main/resources/static下的css文件夹-->
+<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}" />
+</head>
+<body>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">异常处理示例</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-6">
+				<a th:href="@{db}">处理数据库异常</a><br>
+				<a th:href="@{my}">处理自定义异常</a><br>
+				<a th:href="@{no}">处理未知错误</a>
+				<hr>
+				<a th:href="@{nofound}">404错误</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">登录成功页面</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div>
+			<h3>欢迎<span th:text="${user}"></span>登录成功！您的权限是<span th:text="${role}"></span>。</h3><br><br>
+			<a th:href="@{/admin/main}">去访问管理员页面</a><br><br>
+			<a th:href="@{/logout}">安全退出</a>
+		</div>
+	</div>
+</body>
+</html>

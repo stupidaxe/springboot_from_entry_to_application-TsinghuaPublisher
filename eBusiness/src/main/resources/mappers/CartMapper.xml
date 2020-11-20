@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ch.ebusiness.repository.before.CartRepository">
+	<!-- 处理加入收藏  -->
+	<select id="isFocus" resultType="map">
+		select * from focustable where goodstable_id = #{gid} and busertable_id = #{uid}
+	</select>
+	<insert id="focus">
+		insert into focustable (id, goodstable_id, busertable_id, focustime)  values(null, #{gid}, #{uid}, now())
+	</insert>
+	<!-- 是否已添加购物车 -->
+	<select id="isPutCart" resultType="map">
+		select * from carttable where goodstable_id=#{gid}  and busertable_id=#{uid}
+	</select>
+	<!-- 添加购物车 -->
+	<insert id="putCart">
+		insert into carttable (id, busertable_id, goodstable_id, shoppingnum) values(null, #{uid},#{gid},#{bnum})
+	</insert>
+	<!-- 更新购物车 -->
+	<update id="updateCart">
+		update carttable set shoppingnum=shoppingnum+#{bnum} where busertable_id=#{uid} and goodstable_id=#{gid}
+	</update>
+	<!-- 查询购物车 -->
+	<select id="selectCart" parameterType="Integer" resultType="map">
+		select gt.id, gt.gname, gt.gpicture, gt.grprice, ct.shoppingnum, ct.shoppingnum*gt.grprice smallsum 
+		from GOODSTABLE gt, CARTTABLE ct where gt.id=ct.goodstable_id and ct.busertable_id=#{uid}
+	</select>
+	<!-- 删除购物车 -->
+	<delete id="deleteAgoods">
+		delete from carttable where busertable_id=#{uid} and goodstable_id=#{gid}
+	</delete>
+	<!-- 清空购物车 -->
+	<delete id="clear" parameterType="Integer">
+		delete from carttable where busertable_id=#{uid} 
+	</delete>
+	<!-- 添加一个订单，成功后将主键值回填给id（实体类的属性）-->
+	<insert id="addOrder" parameterType="Order" keyProperty="id" useGeneratedKeys="true">
+		insert into orderbasetable (busertable_id, amount, status, orderdate) values (#{busertable_id}, #{amount}, 0, now())
+	</insert>
+	<!-- 生成订单详情 -->
+	<insert id="addOrderDetail">
+		insert into ORDERDETAIL (orderbasetable_id, goodstable_id, SHOPPINGNUM) select #{ordersn}, goodstable_id, SHOPPINGNUM from CARTTABLE where busertable_id = #{uid} 
+	</insert>
+	<!-- 查询商品购买量，以便更新库存使用 -->
+	<select id="selectGoodsShop"  parameterType="Integer" resultType="map">
+		select shoppingnum gshoppingnum, goodstable_id gid from carttable where busertable_id=#{uid}
+	</select>
+	<!-- 更新商品库存 -->
+	<update id="updateStore" parameterType="map">
+		update GOODSTABLE set GSTORE=GSTORE-#{gshoppingnum} where id=#{gid} 
+	</update>
+	<!-- 支付订单 -->
+	<update id="pay" parameterType="Integer">
+		update orderbasetable set status=1 where id=#{ordersn}
+	</update>
+	<!-- 我的收藏 -->
+	<select id="myFocus" resultType="map"  parameterType="Integer">
+		select gt.id, gt.gname, gt.goprice, gt.grprice, gt.gpicture from FOCUSTABLE ft, GOODSTABLE gt 
+		 where ft.goodstable_id=gt.id and  ft.busertable_id = #{uid} 
+	</select>
+	<!-- 我的订单 -->
+	<select id="myOrder"  resultType="map" parameterType="Integer">
+		select id, amount, busertable_id, status, orderdate  from ORDERBASETABLE where busertable_id = #{uid} 
+	</select>
+	<!-- 订单详情 -->
+	<select id="orderDetail" resultType="map"  parameterType="Integer">
+		select gt.id, gt.gname, gt.goprice, gt.grprice, gt.gpicture, odt.shoppingnum from  GOODSTABLE gt, ORDERDETAIL odt 
+		where  odt.orderbasetable_id=#{id} and gt.id=odt.goodstable_id 
+	</select>
+	<!-- 修改密码 -->
+	<update id="updateUpwd">
+		update busertable set bpwd=#{bpwd} where id=#{uid}
+	</update>
+</mapper>

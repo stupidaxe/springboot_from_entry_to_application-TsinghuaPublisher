@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Form</h1>
+    <form action="#" th:action="@{/login}" th:object="${loginBean}" method="post">
+    	<!--th:field="*{uname}"的uname与实体类的属性相同  -->
+        <p>Uname: <input type="text" th:field="*{uname}" th:placeholder="请输入用户名" /></p>
+        <p>Urole: <input type="text" th:field="*{urole}" th:placeholder="请输入角色"  /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+</html>

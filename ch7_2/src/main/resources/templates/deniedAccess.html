@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">拒绝访问页面</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div>
+			<h3><span th:text="${user}"></span>您没有权限访问该页面！您的权限是您的权限是<span th:text="${role}"></span>。</h3><br><br>
+			<a th:href="@{/logout}">安全退出</a>
+		</div>
+	</div>
+</body>
+</html>

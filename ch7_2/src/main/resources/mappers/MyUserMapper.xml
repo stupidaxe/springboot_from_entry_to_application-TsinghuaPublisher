@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ch.ch7_2.repository.MyUserRepository">
+	<!-- 根据用户名级联查询用户权限 -->
+	<resultMap type="MyUser" id="myResult">
+		<id property="id" column="id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<!-- 级联查询 -->
+		<collection 
+			property="authorityList" 
+			ofType="Authority" 
+			column="id"
+			fetchType="eager"
+			select="com.ch.ch7_2.repository.MyUserRepository.findRoleByUser"
+			/>
+	</resultMap>
+	<!-- 根据用户查询用户信息 -->
+	<select id="findByUsername" parameterType="string" resultMap="myResult">
+		select * from user where username = #{username}
+	</select>
+	<!-- 根据用户id查询用户权限 -->
+	<select id="findRoleByUser" parameterType="integer" resultType="Authority">
+		select id, name from authority a, user_authority ua where a.id = ua.authority_id and ua.user_id = #{id}
+	</select>
+	<!-- 注册用户，并将主键保存到MyUser对象的id属性中 -->
+	<insert id="save" parameterType="MyUser" keyProperty="id" useGeneratedKeys="true">
+		insert into user(id, username, password) values(null, #{username},  #{password})
+	</insert>
+	<!-- 添加用户权限详情 -->
+	<insert id="saveUserAuthority">
+		insert into user_authority(user_id, authority_id) values(#{user_id},  #{authority_id})
+	</insert>
+</mapper>

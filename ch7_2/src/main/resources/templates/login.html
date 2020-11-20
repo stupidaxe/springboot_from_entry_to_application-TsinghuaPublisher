@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>登录页面</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#loginBtn").click(function(){
+			var username = $("#username");
+			var password = $("#password");
+			var msg = "";
+			if(username.val() == ""){
+				msg = "用户名不能为空！";
+				username.focus();
+			}else if(password.val() == ""){
+				msg = "密码不能为空！";
+				password.focus();
+			}
+			if(msg != ""){
+				alert(msg);
+				return false;
+			}
+			$("#myform").submit();
+		});
+	});
+</script>
+<body>
+	<div class="container">
+	<div class="bg-primary"  style="width:100%; height: 70px;padding-top: 10px;">
+	       <h2 align="center">用户登录</h2>
+	   </div>
+		<br>
+		<br>
+		<form th:action="@{/login}"  id="myform" method="post"  class="form-horizontal" role="form" >
+			<!-- 用户名或密码错误 -->
+			<div th:if="${param.error != null}">
+				<div class="alert alert-danger">
+					<p><font color="red">用户名或密码错误！</font></p>
+				</div>
+			</div>
+			<!-- 注销 -->
+			<div th:if="${param.logout != null}">
+				<div class="alert alert-success">
+					<p><font color="red">用户已注销成功！</font></p>
+				</div>
+			</div>
+			<div class="form-group has-success">
+				<label class="col-sm-2 col-md-2 control-label">用户名</label>
+				<div class="col-sm-4 col-md-4">
+					<input type="text" class="form-control"
+					 placeholder="请输入您的用户名"
+					name="username" id="username"/>
+				</div>
+			</div>
+			<div class="form-group has-success">
+				  <label class="col-sm-2 col-md-2 control-label">密码</label>
+				  <div class="col-sm-4 col-md-4">
+		  				<input type="password" class="form-control"
+					 placeholder="请输入您的密码" name="password" id="password"/>
+				  </div>
+			 </div> 
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" id="loginBtn" class="btn btn-success" >登录</button>
+					<button type="reset" class="btn btn-primary" >重置</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

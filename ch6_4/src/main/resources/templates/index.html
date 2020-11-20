@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>显示分页查询结果</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}" />
+</head>
+<body>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Spring Data JPA分页查询</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<div class="table table-responsive">
+					<table class="table table-bordered table-hover">
+						<tbody class="text-center">
+							<tr th:each="author:${allAuthor}">
+								<td>
+									<span th:text="${author.id}"></span>
+								</td>
+								<td>
+									<span th:text="${author.aname}"></span>
+								</td>
+							</tr>
+							<tr>
+							<td colspan="2" align="right">
+								<ul class="pagination">
+									<li><a>第<span th:text="${page}"></span>页</a></li>
+									<li><a>共<span th:text="${totalPage}"></span>页</a></li>
+									<li><a>共<span th:text="${totalCount}"></span>条</a></li>
+									<li>
+									<a th:href="@{findAllAuthorByPage(page=${page-1})}" th:if="${page != 1}">上一页</a>
+									</li>
+									<li><a th:href="@{findAllAuthorByPage(page=${page+1})}" th:if="${page != totalPage}">下一页</a>
+									</li>
+								</ul>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

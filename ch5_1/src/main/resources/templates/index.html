@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+测试Spring Boot的Thymeleaf支持<br>
+引入主体内容模板片段：
+<div th:include="footer::content"></div>
+引入版权所有模板片段：
+<div th:replace="footer::copy" ></div>
+</body>
+</html>

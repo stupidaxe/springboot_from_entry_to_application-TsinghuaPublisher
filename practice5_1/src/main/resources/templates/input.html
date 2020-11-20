@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<!-- 默认访问 src/main/resources/static下的css文件夹-->
+<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}" />
+</head>
+<body>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据验证</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div>
+        	<h4>添加用户</h4>
+    	</div>
+		<div class="row">
+			<div class="col-md-6 col-sm-6">
+				<form class="form-horizontal" th:action="@{/add}" th:object="${myUser}"   method="post">
+					<div class="form-group">
+						<div class="input-group col-md-6">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-pencil">用户名</i>
+							</span>
+							<input class="form-control" type="text"
+							 th:field="*{uname}"  th:placeholder="请输入用户名"/>
+						</div><span th:errors="*{uname}"></span>
+					</div>
+					<div class="form-group">
+						<div class="input-group col-md-6">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-pencil">年龄</i>
+							</span>
+							<input class="form-control" type="text"
+							 th:field="*{age}" th:placeholder="请输入年龄"/>
+						</div><span th:errors="*{age}"></span>
+					</div>
+					<div class="form-group">
+						<div class="input-group col-md-6">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-time">工作日期</i>
+							</span>
+							<input class="form-control" type="date"
+							  th:field="*{workdate}" th:placeholder="请选择工作日期"/>
+						</div> <span th:errors="*{workdate}"></span>
+					</div>
+					<div class="form-group">
+						<div class="col-md-6">
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<button type="submit"  class="btn btn-success">
+										<span class="glyphicon glyphicon-share"></span>
+										&nbsp;添加
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

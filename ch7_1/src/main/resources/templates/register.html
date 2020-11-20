@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>注册页面</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<script th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	function checkBpwd(){
+		if($("#username").val() == ""){
+			alert("用户名必须输入！");
+			$("#username").focus();
+			return false;
+		}else if($("#password").val() == ""){
+			alert("密码必须输入！");
+			$("#password").focus();
+			return false;
+		}else if($("#password").val() != $("#repassword").val()){
+			alert("两次密码不一致！");
+			$("#password").focus();
+			return false;
+		}else{
+			document.myform.submit();
+		}
+	}
+</script>
+<body>
+	<div class="container">
+	  	<div class="bg-primary"  style="width:100%; height: 70px;padding-top: 10px;">
+	       <h2 align="center">用户注册</h2>
+	   </div>
+		<br>
+		<br>
+		<form th:action="@{/register}" name="myform" method="post" th:object="${userDomain}"  class="form-horizontal" role="form" >
+			<div class="form-group has-success">
+				<label class="col-sm-2 col-md-2 control-label">用户名</label>
+				<div class="col-sm-4 col-md-4">
+					<input type="text" class="form-control"
+					 placeholder="请输入您的用户名"
+					th:field="*{username}"/>
+				</div>
+			</div>
+	
+			<div class="form-group has-success">
+				  <label class="col-sm-2 col-md-2 control-label">密码</label>
+				  <div class="col-sm-4 col-md-4">
+		  				<input type="password" class="form-control"
+					 placeholder="请输入您的密码" th:field="*{password}" />
+				  </div>
+			 </div>
+	
+			<div class="form-group has-success">
+				  <label class="col-sm-2 col-md-2 control-label">确认密码</label>
+				  <div class="col-sm-4 col-md-4">
+		  				<input type="password" class="form-control"
+					 placeholder="请输入您的密码" th:field="*{repassword}"/>
+				  </div>
+			 </div>
+	
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" onclick="checkBpwd()" class="btn btn-success" >注册</button>
+					<button type="reset" class="btn btn-primary" >重置</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

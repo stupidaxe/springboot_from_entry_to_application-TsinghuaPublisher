@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ch.ebusiness.repository.before.UserRepository">
+	<select id="isUse" parameterType="BUser" resultType="BUser">
+		select * from busertable where bemail = #{bemail}
+	</select>
+	<insert id="register" parameterType="BUser">
+		insert into busertable (id, bemail, bpwd)  values(null, #{bemail}, #{bpwd})
+	</insert>
+	<select id="login" parameterType="BUser" resultType="BUser">
+		select * from busertable where bemail = #{bemail} and bpwd = #{bpwd}
+	</select>
+</mapper>
